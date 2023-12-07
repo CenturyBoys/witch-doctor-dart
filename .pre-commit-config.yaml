@@ -1,0 +1,25 @@
+repos:
+- repo: local
+  hooks:
+    - id: stub
+      name: stub
+      entry: dart
+      language: system
+      types: [ dart ]
+      args:
+        [
+          "format",
+          "."
+        ]
+      always_run: true
+    - id: test
+      name: test
+      entry: dart
+      language: system
+      types: [ dart ]
+      args:
+        [
+          "test",
+          "test"
+        ]
+      always_run: true

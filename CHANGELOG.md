@@ -1,3 +1,4 @@
 ## 1.0.0
 
-- Initial version.
+- Add containers feature
+- Add injections type (singleton and factory) feature

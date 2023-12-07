@@ -1,7 +1,7 @@
 name: witch_doctor
-description: A starting point for Dart libraries or applications.
+description: Dependency injection for dart.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/CenturyBoys/witch-doctor-dart
 
 environment:
   sdk: ^3.2.2
