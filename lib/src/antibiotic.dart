@@ -1,0 +1,3 @@
+class Antibiotic {
+  const Antibiotic();
+}
