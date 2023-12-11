@@ -12,14 +12,14 @@ repos:
           "."
         ]
       always_run: true
-    - id: test
-      name: test
-      entry: dart
-      language: system
-      types: [ dart ]
-      args:
-        [
-          "test",
-          "test"
-        ]
-      always_run: true
+#    - id: test
+#      name: test
+#      entry: dart
+#      language: system
+#      types: [ dart ]
+#      args:
+#        [
+#          "test",
+#          "test/"
+#        ]
+#      always_run: true

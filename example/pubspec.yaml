@@ -1,0 +1,14 @@
+name: example
+description: example for witch doctor
+version: 1.0.0
+environment:
+  sdk: ^3.2.2
+
+# Add regular dependencies here.
+dependencies:
+  witch_doctor:
+    path: ../../witch-doctor-dart
+
+dev_dependencies:
+  source_gen: ^1.0.0
+  build_runner: ^2.4.7

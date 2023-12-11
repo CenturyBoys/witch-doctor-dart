@@ -1,0 +1,53 @@
+import 'dart:async';
+
+import 'package:build/src/builder/build_step.dart';
+import 'package:source_gen/source_gen.dart';
+import 'package:analyzer/dart/element/element.dart';
+import 'package:witch_doctor/src/antibiotic.dart';
+
+class MedicineFactory extends Generator {
+  TypeChecker get typeChecker => TypeChecker.fromRuntime(Antibiotic);
+
+  @override
+  FutureOr<String> generate(LibraryReader library, BuildStep buildStep) async {
+    final values = <String>{};
+    for (var annotatedElement in library.annotatedWith(typeChecker)) {
+      var element = annotatedElement.element;
+      if (element is ClassElement) {
+        final className = element.name;
+        final funcName =
+            '${className}Static'.replaceRange(0, 1, className[0].toLowerCase());
+        final parameters = element.unnamedConstructor?.parameters ?? [];
+        values.add(MedicineFactory.genStaticFunctionConstructor(
+            className, funcName, parameters));
+        values.add(MedicineFactory.genPythonPoison(className, funcName));
+      }
+    }
+    return values.join('\n');
+  }
+
+  static String genStaticFunctionConstructor(
+      String className, String funcName, List<ParameterElement> parameters) {
+    final signature =
+        parameters.map((param) => '${param.type} ${param.name}').join(', ');
+    return '''
+          $className $funcName($signature) {
+            return $className(${parameters.map((param) => param.name).join(', ')});
+          }
+        ''';
+  }
+
+  static String genPythonPoison(String className, String funcName) {
+    return '''
+          class ${className}PythonPoison extends PythonPoison {
+            @override
+            Function(List<dynamic>, Map<Symbol, dynamic>?) distill() {
+              return (List<dynamic> params, Map<Symbol, dynamic>? namedParams) =>
+                    Function.apply($funcName, params, namedParams);
+            }
+            @override
+            bool isSubtype<T>() => <$className>[] is List<T>;
+          }
+        ''';
+  }
+}
