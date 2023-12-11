@@ -1,8 +1,6 @@
-import 'dart:mirrors';
+import 'package:witch_doctor/src/python_poison.dart';
 
 const String _defaultContainerName = "default";
-
-void main() {}
 
 class WitchDoctor {
   static final WitchDoctor _instance = WitchDoctor._init();
@@ -43,23 +41,20 @@ enum InjectionType { singleton, factory }
 
 class Box<T> {
   InjectionType injectionType;
-  Type classReference;
-  List<dynamic> defaultArgs;
-  late InstanceMirror? object;
+  Function(List<dynamic>, Map<Symbol, dynamic>?) instanceCallback;
+  List<dynamic> params;
+  Map<Symbol, dynamic>? namedPrams;
+  late T? object;
 
-  Box(this.injectionType, this.classReference, this.defaultArgs);
+  Box(this.injectionType, this.instanceCallback, this.params, this.namedPrams);
 
   T getInstance() {
     if (injectionType == InjectionType.factory) {
-      InstanceMirror instanceMirror =
-          reflectClass(classReference).newInstance(Symbol(''), defaultArgs);
-      object = instanceMirror;
-    } else if (object == null) {
-      InstanceMirror instanceMirror =
-          reflectClass(classReference).newInstance(Symbol(''), defaultArgs);
-      object = instanceMirror;
+      object = instanceCallback(params, namedPrams);
+    } else {
+      object ??= instanceCallback(params, namedPrams);
     }
-    return object!.reflectee;
+    return object!;
   }
 }
 
@@ -70,11 +65,14 @@ class TopHatContainer {
 
   Map<Type, Box> get references => _references;
 
-  void register<T, B>(InjectionType injectionType,
-      [List<dynamic> defaultArgs = const []]) {
-    if (!reflectType(B).isSubtypeOf(reflectType(T))) {
-      throw Exception("Type $B must extend $T");
+  void register<T>(InjectionType injectionType, PythonPoison instanceCallback,
+      [List<dynamic> params = const [],
+      Map<Symbol, dynamic>? namedParams = const {}]) {
+    if (!(instanceCallback.isSubtype<T>())) {
+      throw Exception(
+          "The python poison is not for that interface, must extend $T");
     }
-    _references[T] = Box<T>(injectionType, B, defaultArgs);
+    _references[T] =
+        Box<T>(injectionType, instanceCallback.distill(), params, namedParams);
   }
 }

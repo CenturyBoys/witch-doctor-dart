@@ -1,6 +1,8 @@
 import 'package:witch_doctor/witch_doctor.dart';
 import 'package:test/test.dart';
 
+import 'class_test.dart';
+
 void main() {
   group('WitchDoctor', () {
     setUp(() {
@@ -36,14 +38,19 @@ void main() {
     test('Error on register wrong types', () {
       TopHatContainer container =
           WitchDoctor.getContainer(name: "container_name_a");
-      expect(() => {container.register<bool, int>(InjectionType.factory)},
+      expect(
+          () => {
+                container.register<InterfaceA>(
+                    InjectionType.factory, ImplCPythonPoison())
+              },
           throwsException);
     });
 
     test('Register new container and resolve it', () {
       TopHatContainer container =
           WitchDoctor.getContainer(name: "container_name_b");
-      container.register<InterfaceA, ImplA>(InjectionType.factory, [10, 20]);
+      container.register<InterfaceA>(
+          InjectionType.factory, ImplAPythonPoison(), [10, 20]);
       WitchDoctor.load(name: "container_name_b");
       expect(WitchDoctor.resolve<InterfaceA>().sum() == 30, isTrue);
     });
@@ -51,11 +58,13 @@ void main() {
     test('Test container load overflow with replacement', () {
       TopHatContainer containerC =
           WitchDoctor.getContainer(name: "container_name_c");
-      containerC.register<InterfaceA, ImplA>(InjectionType.factory, [10, 20]);
+      containerC.register<InterfaceA>(
+          InjectionType.factory, ImplAPythonPoison(), [10, 20]);
 
       TopHatContainer containerD =
           WitchDoctor.getContainer(name: "container_name_d");
-      containerD.register<InterfaceA, ImplB>(InjectionType.factory, [10, 20]);
+      containerD.register<InterfaceA>(
+          InjectionType.factory, ImplBPythonPoison(), [10, 20]);
 
       WitchDoctor.load(name: "container_name_c");
       expect(WitchDoctor.resolve<InterfaceA>().sum() == 30, isTrue);
@@ -67,11 +76,13 @@ void main() {
     test('Test container load overflow aggregated', () {
       TopHatContainer containerE =
           WitchDoctor.getContainer(name: "container_name_e");
-      containerE.register<InterfaceA, ImplA>(InjectionType.factory, [10, 20]);
+      containerE.register<InterfaceA>(
+          InjectionType.factory, ImplAPythonPoison(), [10, 20]);
 
       TopHatContainer containerF =
           WitchDoctor.getContainer(name: "container_name_f");
-      containerF.register<InterfaceB, ImplC>(InjectionType.factory, [10, 20]);
+      containerF.register<InterfaceB>(
+          InjectionType.factory, ImplCPythonPoison(), [10, 20]);
 
       WitchDoctor.load(name: "container_name_e");
       WitchDoctor.load(name: "container_name_f");
@@ -80,48 +91,4 @@ void main() {
       expect(WitchDoctor.resolve<InterfaceB>().sum() == 200, isTrue);
     });
   });
-}
-
-abstract class InterfaceA {
-  int sum();
-}
-
-abstract class InterfaceB {
-  int sum();
-}
-
-class ImplA extends InterfaceA {
-  int a;
-  int b;
-
-  ImplA(this.a, this.b);
-
-  @override
-  int sum() {
-    return a + b;
-  }
-}
-
-class ImplB extends InterfaceA {
-  int a;
-  int b;
-
-  ImplB(this.a, this.b);
-
-  @override
-  int sum() {
-    return a - b;
-  }
-}
-
-class ImplC extends InterfaceB {
-  int a;
-  int b;
-
-  ImplC(this.a, this.b);
-
-  @override
-  int sum() {
-    return a * b;
-  }
 }

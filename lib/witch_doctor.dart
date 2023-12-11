@@ -1,7 +1,8 @@
-/// More dartdocs go here.
 library;
 
-export 'src/witch_doctor_base.dart'
-    show WitchDoctor, InjectionType, TopHatContainer;
+export 'package:witch_doctor/src/python_poison.dart' show PythonPoison;
 
-void main() {}
+export 'package:witch_doctor/src/antibiotic.dart' show Antibiotic;
+
+export 'package:witch_doctor/src/hospital.dart'
+    show WitchDoctor, TopHatContainer, InjectionType;

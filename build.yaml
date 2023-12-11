@@ -1,0 +1,8 @@
+builders:
+  witch_doctor_medicine:
+    import: "package:witch_doctor/builder.dart"
+    builder_factories: ["witchDoctorFactory"]
+    build_extensions: {".dart": ["witch_doctor.g.dart"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen:combining_builder"]
