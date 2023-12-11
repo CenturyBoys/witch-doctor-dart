@@ -3,30 +3,71 @@ By: CenturyBoys
 
 # Witch-doctor
 
-A simple dependency injection for dart.
+A code generator for dependency injection.
 
-Witch Doctor provides a container how you will be able to register interfaces, implementation, injection type, instance args and container name.
+Main concept:
 
-- The interface and implementation inheritance will be checked and will raise an Exception if was some issue.
-- The injection type will be checked and will raise an Exception if was some issue. There are two types the singleton and factory types, the singleton will return the same instance for all injection and the factory will return a new instance for each injection.
-- If no values was giving will not pass the args to the class constructor.
-- The container name will segregate the injections by scopes.
+- Container how you will be able to register interfaces, implementation, injection type, `params` and `namedParams` scoped by his name.
+- Generator this will create all necessary base code for your possibles injectable classes.
 
-## Container
+## Generator
 
-You must register your injections using containers. The method `getContainer` will provide a container register  with a register method. The containers are scoped by name, if no name are provide the will use the default container. see below the signature:
+This lib need generate the base code for the possibles injectable classes and for that we will use the annotation `Antibiotic`. 
+
+You need to add `source_gen` and `build_runner` in your _dev.dependencies_ and run `dart pub get`.
+
+In your class file you need to add the part import and annotated your class.
 
 ```dart
-class TopHatContainer{
-    void register<T, B>(InjectionType injectionType, [List<dynamic> defaultArgs = const []])
+part 'your_class_file_name.g.dart';
+
+abstract class Interface {
+  int sum();
+}
+
+@Antibiotic()
+class Impl extends Interface {
+  int a;
+  int b;
+
+  Impl(this.a, this.b);
+
+  @override
+  int sum() {
+    return a + b;
+  }
 }
 ```
 
-The `T` type must be the abstract class and `B` must be his implementation.
+Go a head and generate the code, for that run `dart run build_runner build`.
+
+Now, if all runs ok you will find a new file in the current file path with the name `your_class_file_name.g.dart` with the class `YourClassNamePythonPoison`.
+
+
+## Container
+
+You must register your injections using containers. The method `getContainer` will provide a container register  with a register method. The containers are scoped by name, if no name are provide they will use the default container. see below the signature:
+
+```dart
+class TopHatContainer{
+  void register<T>(
+      InjectionType injectionType, 
+      PythonPoison instanceCallback,
+      [
+        List<dynamic> params = const [],
+        Map<Symbol, dynamic>? namedParams = const {}
+      ]
+      );
+}
+```
+
+- The interface and implementation inheritance will be checked and will raise an Exception if was some issue. PythonPoison class must be from an extended class of type `T`.
+- The injection type will be checked and will raise an Exception if was some issue. There are two types the singleton and factory types, the singleton will return the same instance for all injection and the factory will return a new instance for each injection.
+
 
 You create a container and registered it out and now? 
 
-To use the container you need to load it using `load` method. The current container is a flat aggregation of loaded containers, it means that if you have to containers with the same abstract class registered but with different implementations and you loaded both containers the last container loaded will overwrite the previous one.
+To use the container you need to load it using `load` method. The current container is a flat aggregation of loaded containers, it means that if you have to containers with the same abstract class registered but with different implementations, and you loaded both containers the last container loaded will overwrite the previous one.
 
 ```dart
 import 'package:witch_doctor/src/witch_doctor_container.dart';
@@ -70,47 +111,4 @@ Witch Doctor can be called where you want for this use the resolve method. The a
 class WitchDoctor{
   static T resolve<T>();
 }
-```
-
-## Usage example
-
-```dart
-import 'package:witch_doctor/src/witch_doctor_container.dart';
-import 'package:witch_doctor/witch_doctor.dart';
-
-abstract class InterfaceA {
-  int sum();
-}
-
-class ImplA extends InterfaceA {
-  int a;
-  int b;
-
-  ImplA(this.a, this.b);
-
-  @override
-  int sum() {
-    return a + b;
-  }
-}
-
-void main() {
-  // Creating container with name container_name_b
-  TopHatContainer container =  WitchDoctor.getContainer(name: "container_name");
-
-  // Register <Interface, Implementation> passing the injection type and default args
-  container.register<InterfaceA, ImplA>(InjectionType.factory, [10, 20]);
-
-  // Load container
-  WitchDoctor.load(name: "container_name");
-
-  // Resolve instance using his interface
-  InterfaceA instance = WitchDoctor.resolve<InterfaceA>();
-
-  // Calling abstract method sum from implementation
-  int value = instance.sum();
-
-  print('value: $value');
-}
-
 ```
