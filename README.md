@@ -14,7 +14,7 @@ Main concept:
 
 This lib need generate the base code for the possibles injectable classes and for that we will use the annotation `Antibiotic`. 
 
-You need to add `source_gen` and `build_runner` in your _dev.dependencies_ and run `dart pub get`.
+You need to add `source_gen` and `build_runner` in your _dev_dependencies_ and run `dart pub get`.
 
 In your class file you need to add the part import and annotated your class.
 
