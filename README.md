@@ -12,7 +12,7 @@ Main concept:
 
 ## Generator
 
-This lib need generate the base code for the possibles injectable classes and for that we will use the annotation `Antibiotic`. 
+This lib need generate the base code for the possibles injectable classes, witch_doctor have his on builder `witchDoctorFactory` how will use the annotation `@Antibiotic()` to generate the injection code. 
 
 You need to add `source_gen` and `build_runner` in your _dev_dependencies_ and run `dart pub get`.
 
@@ -73,10 +73,13 @@ To use the container you need to load it using `load` method. The current contai
 import 'package:witch_doctor/src/witch_doctor_container.dart';
 import 'package:witch_doctor/witch_doctor.dart';
 
+part 'your_class_file_name.g.dart';
+
 abstract class InterfaceA {
   int sum();
 }
 
+@Antibiotic()
 class ImplA extends InterfaceA {
   int a;
   int b;
@@ -93,8 +96,8 @@ void main() {
   // Creating container with name container_name_b
   TopHatContainer container =  WitchDoctor.getContainer(name: "container_name");
 
-  // Register <Interface, Implementation> passing the injection type and default args
-  container.register<InterfaceA, ImplA>(InjectionType.factory, [10, 20]);
+  // Register <Interface> passing the injection type, pythonPoison, default params and named params
+  container.register<InterfaceA>(InjectionType.factory, ImplAPythonPoison(),  [10], {"b": 20});
 
   // Load container
   WitchDoctor.load(name: "container_name");
