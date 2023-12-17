@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fixing documentation --"
+
 ## 1.1.0
 
 - Remove `dart:mirrors` lib.
