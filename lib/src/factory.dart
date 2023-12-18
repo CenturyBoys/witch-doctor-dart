@@ -1,3 +1,10 @@
+/// Code generator that use the Antibiotic annotation
+///
+/// The generator will create ClassNamePythonPoison and ClassNameStatic.
+/// *PythonPoison is a generic object factory that have the method distill()
+/// and recaeve generic params List<dynamic> and , generic named params Map<Symbol, dynamic>?.
+/// *Static is a static function that returns a object instance .
+
 import 'dart:async';
 
 import 'package:build/src/builder/build_step.dart';
