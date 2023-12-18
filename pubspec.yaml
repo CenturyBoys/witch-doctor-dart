@@ -1,6 +1,6 @@
 name: witch_doctor
 description: A simple and intuitive dependency injection library for dart.
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/CenturyBoys/witch-doctor-dart
 repository: https://github.com/CenturyBoys/witch-doctor-dart
 issue_tracker: https://github.com/CenturyBoys/witch-doctor-dart/issues

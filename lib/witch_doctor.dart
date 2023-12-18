@@ -1,3 +1,7 @@
+/// WitchDoctor
+///
+/// "Which doctor you expecting?"
+
 library;
 
 export 'package:witch_doctor/src/python_poison.dart' show PythonPoison;

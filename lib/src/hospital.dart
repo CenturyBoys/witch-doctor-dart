@@ -1,3 +1,8 @@
+/// WitchDoctor base code
+///
+/// Box is the class sub-container where all default params, named params and object instance are saved.
+/// TopHatContainer is the named scoped container where the classes will be registered.
+
 import 'package:witch_doctor/src/python_poison.dart';
 
 const String _defaultContainerName = "default";
@@ -44,17 +49,18 @@ class Box<T> {
   Function(List<dynamic>, Map<Symbol, dynamic>?) instanceCallback;
   List<dynamic> params;
   Map<Symbol, dynamic>? namedPrams;
-  late T? object;
+  late T? instance_object;
 
-  Box(this.injectionType, this.instanceCallback, this.params, this.namedPrams);
+  Box(this.injectionType, this.instanceCallback, this.params, this.namedPrams,
+      [this.instance_object = null]);
 
   T getInstance() {
     if (injectionType == InjectionType.factory) {
-      object = instanceCallback(params, namedPrams);
+      instance_object = instanceCallback(params, namedPrams);
     } else {
-      object ??= instanceCallback(params, namedPrams);
+      instance_object ??= instanceCallback(params, namedPrams);
     }
-    return object!;
+    return instance_object!;
   }
 }
 

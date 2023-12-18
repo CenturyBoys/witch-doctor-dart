@@ -1,3 +1,7 @@
+## 1.1.2
+
+- Fix error fpr object creation internal logic
+
 ## 1.1.1
 
 - Fixing documentation --"
