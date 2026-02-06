@@ -7,13 +7,14 @@
 
 import 'dart:async';
 
-import 'package:build/src/builder/build_step.dart';
+import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:witch_doctor/src/antibiotic.dart';
 
 class MedicineFactory extends Generator {
-  TypeChecker get typeChecker => TypeChecker.fromRuntime(Antibiotic);
+  TypeChecker get typeChecker =>
+      TypeChecker.typeNamed(Antibiotic, inPackage: 'witch_doctor');
 
   @override
   FutureOr<String> generate(LibraryReader library, BuildStep buildStep) async {
@@ -22,9 +23,10 @@ class MedicineFactory extends Generator {
       var element = annotatedElement.element;
       if (element is ClassElement) {
         final className = element.name;
+        if (className == null) continue;
         final funcName =
             '${className}Static'.replaceRange(0, 1, className[0].toLowerCase());
-        final parameters = element.unnamedConstructor?.parameters ?? [];
+        final parameters = element.unnamedConstructor?.formalParameters ?? [];
         values.add(MedicineFactory.genStaticFunctionConstructor(
             className, funcName, parameters));
         values.add(MedicineFactory.genPythonPoison(className, funcName));
@@ -33,8 +35,8 @@ class MedicineFactory extends Generator {
     return values.join('\n');
   }
 
-  static String genStaticFunctionConstructor(
-      String className, String funcName, List<ParameterElement> parameters) {
+  static String genStaticFunctionConstructor(String className, String funcName,
+      List<FormalParameterElement> parameters) {
     final signature =
         parameters.map((param) => '${param.type} ${param.name}').join(', ');
     return '''
