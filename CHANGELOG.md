@@ -1,3 +1,9 @@
+## 1.2.0
+
+- Update Dart SDK to ^3.10.3
+- Update all dependencies to latest versions (analyzer ^10.0.2, build ^4.0.4, source_gen ^4.2.0)
+- Fix compatibility with source_gen 4.x and analyzer 10.x APIs
+
 ## 1.1.2
 
 - Fix error fpr object creation internal logic
