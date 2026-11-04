@@ -1,0 +1,33 @@
+# Automated publishing to pub.dev via GitHub's OIDC (no secrets stored).
+#
+# One-time setup on pub.dev (package admin → Automated publishing) for EACH
+# package, enabling publishing from this repo with the matching tag pattern:
+#   - witch_doctor            → tag pattern: witch_doctor-v{{version}}
+#   - witch_doctor_generator  → tag pattern: witch_doctor_generator-v{{version}}
+#
+# Release by pushing a tag, e.g.:
+#   git tag witch_doctor-v2.0.0 && git push origin witch_doctor-v2.0.0
+name: Publish
+
+on:
+  push:
+    tags:
+      - "witch_doctor-v[0-9]+.[0-9]+.[0-9]+"
+      - "witch_doctor_generator-v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  publish-witch-doctor:
+    if: startsWith(github.ref, 'refs/tags/witch_doctor-v')
+    permissions:
+      id-token: write # required for pub.dev OIDC authentication
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/witch_doctor
+
+  publish-witch-doctor-generator:
+    if: startsWith(github.ref, 'refs/tags/witch_doctor_generator-v')
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      working-directory: packages/witch_doctor_generator

@@ -1,25 +1,25 @@
 repos:
-- repo: local
-  hooks:
-    - id: stub
-      name: stub
-      entry: dart
-      language: system
-      types: [ dart ]
-      args:
-        [
-          "format",
-          "."
-        ]
-      always_run: true
-#    - id: test
-#      name: test
-#      entry: dart
-#      language: system
-#      types: [ dart ]
-#      args:
-#        [
-#          "test",
-#          "test/"
-#        ]
-#      always_run: true
+  - repo: local
+    hooks:
+      - id: dart-format
+        name: dart format
+        entry: dart format .
+        language: system
+        types: [dart]
+        pass_filenames: false
+        always_run: true
+
+      - id: dart-analyze
+        name: dart analyze
+        entry: dart analyze
+        language: system
+        types: [dart]
+        pass_filenames: false
+        always_run: true
+
+      - id: conventional-commit
+        name: conventional commit message
+        language: pygrep
+        entry: '^(?!(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?!?: .+)'
+        args: [--multiline]
+        stages: [commit-msg]

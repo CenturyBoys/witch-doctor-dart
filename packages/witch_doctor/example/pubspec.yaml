@@ -1,0 +1,16 @@
+name: witch_doctor_example
+description: Example usage of the witch_doctor dependency injection library.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.10.3
+
+resolution: workspace
+
+dependencies:
+  witch_doctor: ^2.0.0
+
+dev_dependencies:
+  witch_doctor_generator: ^2.0.0
+  build_runner: ^2.11.0

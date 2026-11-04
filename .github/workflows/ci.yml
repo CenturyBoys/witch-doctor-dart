@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [stable, "3.10.3"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Resolve workspace
+        run: dart pub get
+
+      - name: Verify formatting
+        if: matrix.sdk == 'stable'
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: >-
+          dart analyze --fatal-infos
+          packages/witch_doctor
+          packages/witch_doctor_generator
+          packages/witch_doctor/example
+
+      - name: Build the example (code generation)
+        working-directory: packages/witch_doctor/example
+        run: dart run build_runner build
+
+      - name: Run tests
+        working-directory: packages/witch_doctor
+        run: dart test
+
+      - name: Publish dry-run (witch_doctor)
+        if: matrix.sdk == 'stable'
+        working-directory: packages/witch_doctor
+        run: dart pub publish --dry-run
+
+      - name: Publish dry-run (witch_doctor_generator)
+        if: matrix.sdk == 'stable'
+        working-directory: packages/witch_doctor_generator
+        run: dart pub publish --dry-run
