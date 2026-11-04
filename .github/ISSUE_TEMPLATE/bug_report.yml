@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a problem with witch_doctor or witch_doctor_generator
+labels: [bug]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - witch_doctor
+        - witch_doctor_generator
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: "2.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: A minimal code sample is hugely helpful.
+      render: dart
+    validations:
+      required: true
+  - type: input
+    id: dart-version
+    attributes:
+      label: Dart SDK version
+      placeholder: "dart --version"
+    validations:
+      required: true
