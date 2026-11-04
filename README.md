@@ -15,10 +15,14 @@ This repository is a **pub workspace** (monorepo) with two published packages:
 | [`witch_doctor`](packages/witch_doctor) | Runtime DI container + annotations. Zero runtime dependencies. | [![pub](https://img.shields.io/pub/v/witch_doctor.svg)](https://pub.dev/packages/witch_doctor) |
 | [`witch_doctor_generator`](packages/witch_doctor_generator) | Optional build-time code generator (`@Remedy` → registrations). | [![pub](https://img.shields.io/pub/v/witch_doctor_generator.svg)](https://pub.dev/packages/witch_doctor_generator) |
 
-👉 **Start with the [`witch_doctor` README](packages/witch_doctor/README.md).**
+👉 **Documentation site:** https://centuryboys.github.io/witch-doctor-dart/ ·
+**API reference:** https://centuryboys.github.io/witch-doctor-dart/api/
+
+Or start with the [`witch_doctor` README](packages/witch_doctor/README.md).
 
 ## Repository docs
 
+- [Documentation site](https://centuryboys.github.io/witch-doctor-dart/) — guide, examples, comparison, API reference (built from `docs/` + dartdoc).
 - [AGENTS.md](AGENTS.md) — canonical guide for contributors and AI agents.
 - [CONTRIBUTING.md](CONTRIBUTING.md) — GitFlow + Conventional Commits workflow.
 - [MIGRATION.md](MIGRATION.md) — upgrading from 1.x to 2.0.

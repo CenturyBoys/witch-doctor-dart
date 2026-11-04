@@ -1,0 +1,58 @@
+site_name: Witch Doctor
+site_description: Simple, type-safe dependency injection for Dart.
+site_url: https://centuryboys.github.io/witch-doctor-dart/
+repo_url: https://github.com/CenturyBoys/witch-doctor-dart
+repo_name: CenturyBoys/witch-doctor-dart
+edit_uri: edit/develop/docs/
+copyright: Apache 2.0 &copy; CenturyBoys
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Guide: guide.md
+  - Annotations & codegen: annotations.md
+  - Comparison: comparison.md
+  - Examples: examples.md
+  - Migration (1.x → 2.0): migration.md
+  - FAQ: faq.md
+  - API reference ↗: https://centuryboys.github.io/witch-doctor-dart/api/
