@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:witch_doctor/witch_doctor.dart';
@@ -92,7 +93,10 @@ class RemedyInitBuilder implements Builder {
       buildStep.inputId.package,
       'lib/witch_doctor.init.dart',
     );
-    await buildStep.writeAsString(outputId, buffer.toString());
+    final formatted = DartFormatter(
+      languageVersion: DartFormatter.latestLanguageVersion,
+    ).format(buffer.toString());
+    await buildStep.writeAsString(outputId, formatted);
   }
 
   _Registration _readRegistration(
