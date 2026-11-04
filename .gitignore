@@ -8,8 +8,11 @@ build/
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 
-# Generated API docs
+# Generated API docs and built documentation site
 doc/api/
+_apidoc/
+_site/
+/site/
 
 # IDEs
 .idea/

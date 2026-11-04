@@ -111,6 +111,17 @@ attributed to the human author only.
 - Tests call `WitchDoctor.reset()` in `setUp` to stay isolated.
 - `dart test` must pass before opening a PR.
 
+## Documentation
+
+- The published, pub.dev-facing docs are the package `README.md` files,
+  `MIGRATION.md`, and the dartdoc on every public member.
+- The documentation **site** lives in `docs/` (MkDocs Material, config in
+  `mkdocs.yml`). Build it locally with `pip install mkdocs-material && mkdocs serve`.
+- `.github/workflows/docs.yml` builds the site plus the `dart doc` API reference
+  and deploys both to GitHub Pages on pushes to `main` (API served under `/api/`).
+- Keep the site pages in `docs/` in sync with the READMEs when the public API
+  changes.
+
 ## Release process
 
 1. Bump the package `version` and add a `CHANGELOG.md` entry (both packages if
