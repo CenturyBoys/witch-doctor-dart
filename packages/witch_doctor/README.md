@@ -16,6 +16,9 @@ Witch Doctor is the Dart sibling of the Python package
 shares its philosophy: **explicit registration, validated bindings, injection
 lifetimes, and named container scopes** — kept small and predictable.
 
+📖 **Full documentation:** https://centuryboys.github.io/witch-doctor-dart/ ·
+**API reference:** https://centuryboys.github.io/witch-doctor-dart/api/
+
 ## Why Witch Doctor?
 
 - **Type-safe, no magic.** The generic `<T>` is the resolution key; binding a
